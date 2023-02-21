@@ -1,0 +1,55 @@
+Menu ---> Ustawienia player 1 ---> Nick
+                              ---> Człowie / AI
+
+     ---> Ustawienia player 2 ---> Nick
+                              ---> Człowie / AI
+
+     ---> Poziom trudności    ---> Łatwy, Średni, Trudny
+
+     ---> Opis gry
+
+
+
+for liczba statków
+    player[0]["statki"].append(generuj_statek())
+
+wyswietl_tablice(tablica_player1)
+
+for liczba statków
+    def wstaw_statek()
+        
+wyswietl_tablice(tablica_player2)
+
+for koniec_statkow
+    sprawdz_ruch_składnia() # Sprawdza czy wprowadzony ciąg znaków jest poprawny (np. b5 ale nie hg)
+    sprawdz_ruch_wynik() # Sprawdza czy coś zostało trafione
+
+    wyswietl_tablice(tablica_player1, tablica_player2)
+
+wyswietl_wynik()
+
+
+
+
+
+
+statki = [1, 2, 3, 3, 4]
+
+player = []
+player.append({
+    "czlowie_czy_ai" = 1
+    "statki" = [] 
+})
+
+for rozmiar_statku in statki:
+    wstaw_statek(player[0], rozmiar_statku, rozmiar_planszy)
+    
+def generuj_statek(player[0], rozmiar_statku, rozmiar_planszy):
+    statek = []
+    pobierz pole
+    pobierz orientacje (poziomo/pionowo)
+    sprawdz poprawnosc
+    for i in range(rozmiar_statku):
+        statek.append("b2")
+    
+    return statek

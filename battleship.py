@@ -32,8 +32,8 @@ while True:
     # Initial parameters
     settings = battleship_menu(settings, difficulty)
 
-    board_size = difficulty[settings["difficulty"]["board_size"]]
-    ships = difficulty[settings["difficulty"]["board_size"]]
+    board_size = difficulty[settings["difficulty"]]["board_size"]
+    ships = difficulty[settings["difficulty"]]["ships"]
 
     players = {
         1: {
@@ -62,7 +62,7 @@ while True:
                 ship_add_start_coordinates = input(player["name"] + ": Podaj współrzędne pierwszego pola statku o długości " + ship +": ")
                 ship_add_orintation = input("Podaj Podaj orientację statku. 1 - pozioma ; 2 - pionowa: ")
 
-                ship_to_add = battleship_ship_add(player, ship_add_start_coordinates, ship_add_orintation, board_size)
+                ship_to_add = battleship_ship_add(player, ship_add_start_coordinates, ship_add_orintation, ship, board_size)
 
                 if ship_to_add == False: print("Błędne parametry, spróbuj ponownie")
                 else: players[number]["ships"].append(ship_to_add)

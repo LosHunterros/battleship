@@ -47,7 +47,6 @@ while True:
             "name": settings["player1_name"],
             "type": settings["player1_type"],
             "ships": [],
-            "ships_shots_hit": [],
             "ships_shots_miss": []
         }
     }

@@ -7,15 +7,18 @@ from game_result import battleship_game_result
 difficulty = {
     "easy" : {
         "board_size" : [5, 5],
-        "ships" : [3, 2, 1]
+        "ships" : [3, 2, 1],
+        "name": "Łatwy"
     },
     "medium" : {
         "board_size" : [7, 7],
-        "ships" : [3, 3, 2, 2, 1, 1]
+        "ships" : [3, 3, 2, 2, 1, 1],
+        "name": "Średni"
     },
     "hard" : {
         "board_size" : [10, 10],
-        "ships" : [4, 3, 3, 3, 2, 2, 2, 1, 1, 1]
+        "ships" : [4, 3, 3, 3, 2, 2, 2, 1, 1, 1],
+        "name": "Trudny"
     }
 }
 

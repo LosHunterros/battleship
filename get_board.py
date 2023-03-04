@@ -67,8 +67,8 @@ def battleship_get_board(player, board_size, show_ships = False):
             board[ship_part[0]+"-2"][ship_part[1]+"-4"] = " "
 
     first_line = ""
-    for i in range(board_size[0]):
-        first_line += " " + chr(ord('A')+i) + "  "
+    for i in range(1, board_size[0]+1):
+        first_line += " " + str(i).rjust(2) + " "
 
     board_height = board_size[1] * 2 + 3
     board_height_target = 23
@@ -88,8 +88,8 @@ def battleship_get_board(player, board_size, show_ships = False):
     i = 0
     for line in board:
         if i % 2 == 0:
-            number = str(int((i+2)/2))
-            line_final = f"{number.rjust(2)} │"
+            number = int(i/2)
+            line_final = " " + chr(ord('A')+number) + " │"
         else: line_final = "   │"
         for char in board[line]:
             line_final += board[line][char]

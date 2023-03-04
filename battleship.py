@@ -79,35 +79,47 @@ while True:
         for ship in ships:
             ship_to_add = False
 
-            while ship_to_add == False:
+            while not isinstance(ship_to_add, list):
 
                 text_lines = {
                     6: "Przygotowywanie rozgrywki",
-                    7: players[1]["name"] + " Wprowadza statki",
+                    7: player["name"] + " Wprowadza statki",
                     9: "Wprowadź statek o długości " + str(ship),
                     10: "Podaj współrzędne pierwszego pola statku"
                 }
-                board1 = battleship_get_board(players[1], board_size)
-                board2 = battleship_get_board(players[2], board_size)
+                board1 = battleship_get_board(players[1], board_size, True)
+                board2 = battleship_get_board(players[2], board_size, True)
                 battleship_show_game(players, board1, board2, text_lines)
-                ship_add_start_coordinates = input("Podaj współrzędne pierwszego pola statku: ")
+                ship_add_start_coordinates = input_with_quit("Podaj współrzędne pierwszego pola statku: ")
 
                 text_lines = {
                     6: "Przygotowywanie rozgrywki",
-                    7: players[1]["name"] + " Wprowadza statki",
+                    7: player["name"] + " Wprowadza statki",
                     9: "Wprowadź statek o długości " + str(ship),
                     11: "Podaj położenie statku:",
                     12: "1. Poziome",
                     13: "2. Pionowe"
                 }
-                board1 = battleship_get_board(players[1], board_size)
-                board2 = battleship_get_board(players[2], board_size)
+                board1 = battleship_get_board(players[1], board_size, True)
+                board2 = battleship_get_board(players[2], board_size, True)
                 battleship_show_game(players, board1, board2, text_lines)
-                ship_add_orintation = input("Podaj położenie statku: ")
+                ship_add_orientation = input_with_quit("Podaj położenie statku: ")
 
-                ship_to_add = battleship_ship_add(player, ship_add_start_coordinates, ship_add_orintation, ship, board_size)
+                ship_to_add = battleship_ship_add(player["ships"], ship_add_start_coordinates.lower(), ship_add_orientation, ship, board_size)
 
-                if ship_to_add == False: print("Błędne parametry, spróbuj ponownie")
+                if isinstance(ship_to_add, str):
+                    text_lines = {
+                        6: "Przygotowywanie rozgrywki",
+                        7: player["name"] + " Wprowadza statki",
+                        9: ship_to_add,
+                        11: "Spróbuj ponownie",
+                        12: "Naciśnij enter aby kontynuować"
+                    }
+                    board1 = battleship_get_board(players[1], board_size, True)
+                    board2 = battleship_get_board(players[2], board_size, True)
+                    battleship_show_game(players, board1, board2, text_lines)
+                    input_with_quit("Naciśnij enter aby kontynuować ")
+                    
                 else: players[number]["ships"].append(ship_to_add)
 
     # Begin shooting
@@ -118,13 +130,55 @@ while True:
     while winner == False:
 
         shot = False
-        while shot == False:
-            shot = input(players[player_active]["name"] + ": Podaj współrzędne strzału: ")
+        while not isinstance(shot, list):
+            text_lines = {
+                7: "Strzela:",
+                9: players[player_active]["name"]
+            }
+            board1 = battleship_get_board(players[1], board_size)
+            board2 = battleship_get_board(players[2], board_size)
+            battleship_show_game(players, board1, board2, text_lines)
+
+            shot = input("Podaj współrzędne strzału: ")
             shot = battleship_shot_check(players[player_oponent], shot, board_size)
 
-            if shot == False: print("Błędne parametry, spróbuj ponownie")
-            elif shot[1] == "hit": players[player_oponent]["ships_shots_hit"].append(shot[0])
-            elif shot[1] == "miss": players[player_oponent]["ships_shots_miss"].append(shot[0])
+            if isinstance(shot, str):
+                text_lines = {
+                    7: "Strzela:",
+                    9: players[player_active]["name"],
+                    11: ship_to_add,
+                    12: "Spróbuj ponownie",
+                    13: "Naciśnij enter aby kontynuować"
+                }
+                board1 = battleship_get_board(players[1], board_size)
+                board2 = battleship_get_board(players[2], board_size)
+                battleship_show_game(players, board1, board2, text_lines)
+                input_with_quit("Naciśnij enter aby kontynuować ")
+
+            elif shot[1] == "hit":
+                text_lines = {
+                    7: "Strzela:",
+                    9: players[player_active]["name"],
+                    11: "TRAFIONY",
+                    13: "Naciśnij enter aby kontynuować"
+                }
+                board1 = battleship_get_board(players[1], board_size)
+                board2 = battleship_get_board(players[2], board_size)
+                battleship_show_game(players, board1, board2, text_lines)
+                input_with_quit("Naciśnij enter aby kontynuować ")
+                players[player_oponent]["ships_shots_hit"].append(shot[0])
+            elif shot[1] == "miss":
+                text_lines = {
+                    7: "Strzela:",
+                    9: players[player_active]["name"],
+                    11: "Pudło...",
+                    13: "Naciśnij enter aby kontynuować"
+                }
+                board1 = battleship_get_board(players[1], board_size)
+                board2 = battleship_get_board(players[2], board_size)
+                battleship_show_game(players, board1, board2, text_lines)
+                input_with_quit("Naciśnij enter aby kontynuować ")
+                players[player_oponent]["ships_shots_miss"].append(shot[0])
 
         winner = battleship_game_result(players[player_oponent])
 

@@ -61,6 +61,16 @@ players = {
 while True:
 
     # Initial parameters
+
+    players[1]["ships"] = []
+    players[1]["ships_shots_hit"] = []
+    players[1]["ships_shots_sunk"] = []
+    players[1]["ships_shots_miss"] = []
+    players[2]["ships"] = []
+    players[2]["ships_shots_hit"] = []
+    players[2]["ships_shots_sunk"] = []
+    players[2]["ships_shots_miss"] = []
+
     settings = battleship_menu(settings, difficulty, players, player_types)
 
     board_size = difficulty[settings["difficulty"]]["board_size"]
@@ -69,17 +79,9 @@ while True:
     players[1]["name"] = settings["player1_name"]
     players[1]["type"] = settings["player1_type"]
     players[1]["type_description"] = player_types[settings["player2_type"]]
-    players[1]["ships"] = []
-    players[1]["ships_shots_hit"] = []
-    players[1]["ships_shots_sunk"] = []
-    players[1]["ships_shots_miss"] = []
     players[2]["name"] = settings["player2_name"]
     players[2]["type"] = settings["player2_type"]
     players[2]["type_description"] = player_types[settings["player2_type"]]
-    players[2]["ships"] = []
-    players[2]["ships_shots_hit"] = []
-    players[2]["ships_shots_sunk"] = []
-    players[2]["ships_shots_miss"] = []
 
     # Add ships
     for number, player in players.items():

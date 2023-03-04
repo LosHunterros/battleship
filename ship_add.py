@@ -1,3 +1,5 @@
+from shot_check import *
+
 def battleship_ship_add(ships, start_coordinates, orientation, ship_size, board_size):
     '''
     Ads ship to player at game start.
@@ -11,14 +13,9 @@ def battleship_ship_add(ships, start_coordinates, orientation, ship_size, board_
     for i in range(board_size[0]):
         board_size_chars.add(chr(ord('a')+i))
 
-    board_size_nums = set(range(1, board_size[0]+1))
-    board_size_nums = set(map(lambda x: str(x), board_size_nums))
+    shot_is_in_board = battleship_shot_is_in_board(start_coordinates, board_size)
+    if isinstance(shot_is_in_board, str): return shot_is_in_board
 
-    if len(start_coordinates) not in [2, 3]: return "Nieprawidłowe współrzędne"
-    if len(start_coordinates) == 2:
-        if ( start_coordinates[0] not in board_size_chars or start_coordinates[1] not in board_size_nums ) and ( start_coordinates[1] not in board_size_chars or start_coordinates[0] not in board_size_nums ): return "Nieprawidłowe współrzędne"
-    elif len(start_coordinates) == 3:
-        if ( start_coordinates[0] not in board_size_chars or start_coordinates[1:] not in board_size_nums ) and ( start_coordinates[2] not in board_size_chars or start_coordinates[0:2] not in board_size_nums ): return "Nieprawidłowe współrzędne"
     if orientation != "1" and orientation != "2": return "Nieprawidłowe położenie"
 
     if start_coordinates[0] not in board_size_chars:

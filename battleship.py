@@ -156,7 +156,7 @@ while True:
                 text_lines = {
                     7: "Strzela:",
                     9: players[player_active]["name"],
-                    11: ship_to_add,
+                    11: shot,
                     12: "Spróbuj ponownie",
                     13: "Naciśnij enter aby kontynuować"
                 }

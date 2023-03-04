@@ -22,47 +22,49 @@ def battleship_get_board(player, board_size, show_ships = False):
             board[char][str(j) + "-3"] = "┘"
             board[char][str(j) + "-4"] = " "
 
-    if show_ships:
-        for ship in player["ships"]:
-            for ship_part in ship:
-                board[ship_part[0]+"-1"][ship_part[1]+"-1"] = "█"
-                board[ship_part[0]+"-1"][ship_part[1]+"-2"] = "█"
-                board[ship_part[0]+"-1"][ship_part[1]+"-3"] = "█"
-                board[ship_part[0]+"-1"][ship_part[1]+"-4"] = "█"
-                board[ship_part[0]+"-2"][ship_part[1]+"-1"] = "█"
-                board[ship_part[0]+"-2"][ship_part[1]+"-2"] = "█"
-                board[ship_part[0]+"-2"][ship_part[1]+"-3"] = "█"
-                board[ship_part[0]+"-2"][ship_part[1]+"-4"] = "█"
+    if show_ships != "empty":
 
-    for ship_part in player["ships_shots_hit"]:
-        board[ship_part[0]+"-1"][ship_part[1]+"-1"] = "█"
-        board[ship_part[0]+"-1"][ship_part[1]+"-2"] = "█"
-        board[ship_part[0]+"-1"][ship_part[1]+"-3"] = "█"
-        board[ship_part[0]+"-1"][ship_part[1]+"-4"] = "█"
-        board[ship_part[0]+"-2"][ship_part[1]+"-1"] = "█"
-        board[ship_part[0]+"-2"][ship_part[1]+"-2"] = "█"
-        board[ship_part[0]+"-2"][ship_part[1]+"-3"] = "█"
-        board[ship_part[0]+"-2"][ship_part[1]+"-4"] = "█"
+        if show_ships == True:
+            for ship in player["ships"]:
+                for ship_part in ship:
+                    board[ship_part[0]+"-1"][ship_part[1]+"-1"] = "█"
+                    board[ship_part[0]+"-1"][ship_part[1]+"-2"] = "█"
+                    board[ship_part[0]+"-1"][ship_part[1]+"-3"] = "█"
+                    board[ship_part[0]+"-1"][ship_part[1]+"-4"] = "█"
+                    board[ship_part[0]+"-2"][ship_part[1]+"-1"] = "█"
+                    board[ship_part[0]+"-2"][ship_part[1]+"-2"] = "█"
+                    board[ship_part[0]+"-2"][ship_part[1]+"-3"] = "█"
+                    board[ship_part[0]+"-2"][ship_part[1]+"-4"] = "█"
 
-    for ship_part in player["ships_shots_sunk"]:
-        board[ship_part[0]+"-1"][ship_part[1]+"-1"] = "█"
-        board[ship_part[0]+"-1"][ship_part[1]+"-2"] = "▀"
-        board[ship_part[0]+"-1"][ship_part[1]+"-3"] = "▀"
-        board[ship_part[0]+"-1"][ship_part[1]+"-4"] = "█"
-        board[ship_part[0]+"-2"][ship_part[1]+"-1"] = "█"
-        board[ship_part[0]+"-2"][ship_part[1]+"-2"] = "▄"
-        board[ship_part[0]+"-2"][ship_part[1]+"-3"] = "▄"
-        board[ship_part[0]+"-2"][ship_part[1]+"-4"] = "█"
+        for ship_part in player["ships_shots_hit"]:
+            board[ship_part[0]+"-1"][ship_part[1]+"-1"] = "█"
+            board[ship_part[0]+"-1"][ship_part[1]+"-2"] = "█"
+            board[ship_part[0]+"-1"][ship_part[1]+"-3"] = "█"
+            board[ship_part[0]+"-1"][ship_part[1]+"-4"] = "█"
+            board[ship_part[0]+"-2"][ship_part[1]+"-1"] = "█"
+            board[ship_part[0]+"-2"][ship_part[1]+"-2"] = "█"
+            board[ship_part[0]+"-2"][ship_part[1]+"-3"] = "█"
+            board[ship_part[0]+"-2"][ship_part[1]+"-4"] = "█"
 
-    for ship_part in player["ships_shots_miss"]:
-        board[ship_part[0]+"-1"][ship_part[1]+"-1"] = " "
-        board[ship_part[0]+"-1"][ship_part[1]+"-2"] = "▄"
-        board[ship_part[0]+"-1"][ship_part[1]+"-3"] = "▄"
-        board[ship_part[0]+"-1"][ship_part[1]+"-4"] = " "
-        board[ship_part[0]+"-2"][ship_part[1]+"-1"] = " "
-        board[ship_part[0]+"-2"][ship_part[1]+"-2"] = "▀"
-        board[ship_part[0]+"-2"][ship_part[1]+"-3"] = "▀"
-        board[ship_part[0]+"-2"][ship_part[1]+"-4"] = " "
+        for ship_part in player["ships_shots_sunk"]:
+            board[ship_part[0]+"-1"][ship_part[1]+"-1"] = "█"
+            board[ship_part[0]+"-1"][ship_part[1]+"-2"] = "▀"
+            board[ship_part[0]+"-1"][ship_part[1]+"-3"] = "▀"
+            board[ship_part[0]+"-1"][ship_part[1]+"-4"] = "█"
+            board[ship_part[0]+"-2"][ship_part[1]+"-1"] = "█"
+            board[ship_part[0]+"-2"][ship_part[1]+"-2"] = "▄"
+            board[ship_part[0]+"-2"][ship_part[1]+"-3"] = "▄"
+            board[ship_part[0]+"-2"][ship_part[1]+"-4"] = "█"
+
+        for ship_part in player["ships_shots_miss"]:
+            board[ship_part[0]+"-1"][ship_part[1]+"-1"] = " "
+            board[ship_part[0]+"-1"][ship_part[1]+"-2"] = "▄"
+            board[ship_part[0]+"-1"][ship_part[1]+"-3"] = "▄"
+            board[ship_part[0]+"-1"][ship_part[1]+"-4"] = " "
+            board[ship_part[0]+"-2"][ship_part[1]+"-1"] = " "
+            board[ship_part[0]+"-2"][ship_part[1]+"-2"] = "▀"
+            board[ship_part[0]+"-2"][ship_part[1]+"-3"] = "▀"
+            board[ship_part[0]+"-2"][ship_part[1]+"-4"] = " "
 
     first_line = ""
     for i in range(board_size[0]):

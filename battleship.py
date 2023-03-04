@@ -80,8 +80,30 @@ while True:
             ship_to_add = False
 
             while ship_to_add == False:
-                ship_add_start_coordinates = input(player["name"] + ": Podaj współrzędne pierwszego pola statku o długości " + ship +": ")
-                ship_add_orintation = input("Podaj Podaj orientację statku. 1 - pozioma ; 2 - pionowa: ")
+
+                text_lines = {
+                    6: "Przygotowywanie rozgrywki",
+                    7: players[1]["name"] + " Wprowadza statki",
+                    9: "Wprowadź statek o długości " + str(ship),
+                    10: "Podaj współrzędne pierwszego pola statku"
+                }
+                board1 = battleship_get_board(players[1], board_size)
+                board2 = battleship_get_board(players[2], board_size)
+                battleship_show_game(players, board1, board2, text_lines)
+                ship_add_start_coordinates = input("Podaj współrzędne pierwszego pola statku: ")
+
+                text_lines = {
+                    6: "Przygotowywanie rozgrywki",
+                    7: players[1]["name"] + " Wprowadza statki",
+                    9: "Wprowadź statek o długości " + str(ship),
+                    11: "Podaj położenie statku:",
+                    12: "1. Poziome",
+                    13: "2. Pionowe"
+                }
+                board1 = battleship_get_board(players[1], board_size)
+                board2 = battleship_get_board(players[2], board_size)
+                battleship_show_game(players, board1, board2, text_lines)
+                ship_add_orintation = input("Podaj położenie statku: ")
 
                 ship_to_add = battleship_ship_add(player, ship_add_start_coordinates, ship_add_orintation, ship, board_size)
 

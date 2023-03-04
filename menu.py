@@ -1,6 +1,8 @@
 from functions import *
+from get_board import battleship_get_board
+from show_game import battleship_show_game
 
-def battleship_menu(settings, difficulty):
+def battleship_menu(settings, difficulty, players, player_types):
     '''
     Alow users to set their own setting.
     Function accepts current settings and return users settings in same format:
@@ -15,17 +17,20 @@ def battleship_menu(settings, difficulty):
     operation = ""
 
     while operation != "1":
-        clear()
-        print("Witaj w grze")
-        print("Player 1: nick " + settings["player1_name"] + " ; człowiek/SI: " + settings["player1_type"])
-        print("Player 2: nick " + settings["player2_name"] + " ; człowiek/SI: " + settings["player2_type"])
-        print("Poziom trudności:  " + difficulty[settings["difficulty"]]["name"])
-        print("Wybierz opcję z menu")
-        print("1. Graj")
-        print("2. Zmień ustawienia player 1")
-        print("3. Zmień ustawienia player 2")
-        print("4. Zmień poziom trudności")
-        print("Wpisz 'Quit' aby zakończyć grę")
+        text_lines = {
+            2: "W grze uczestniczą:",
+            4: settings["player1_name"] + " jako " + player_types[settings["player1_type"]],
+            5: settings["player1_name"] + " jako " + player_types[settings["player1_type"]],
+            7: "Poziom trudności: " + difficulty[settings["difficulty"]]["name"] + "",
+            10: "Menu:",
+            12: "1. Graj",
+            13: "2. Zmień ustawienia player 1",
+            14: "3. Zmień ustawienia player 2",
+            15: "4. Zmień poziom trudności"
+        }
+        board1 = battleship_get_board(players[1], difficulty[settings["difficulty"]]["board_size"])
+        board2 = battleship_get_board(players[2], difficulty[settings["difficulty"]]["board_size"])
+        battleship_show_game(players, board1, board2, text_lines)
 
         operation = input_with_quit("Wybierz opcję z menu: ")
 

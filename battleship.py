@@ -3,6 +3,8 @@ from menu import battleship_menu
 from ship_add import battleship_ship_add
 from shot_check import battleship_shot_check
 from game_result import battleship_game_result
+from get_board import battleship_get_board
+from show_game import battleship_show_game
 
 difficulty = {
     "easy" : {
@@ -30,32 +32,46 @@ settings = {
     "difficulty": "easy"            # easy / medium / hard
 }
 
+player_types = {
+    "human": "Człowiek",
+    "ai": "SI"
+}
+
+players = {
+    1: {
+        "name": settings["player1_name"],
+        "type": settings["player1_type"],
+        "type_description": player_types[settings["player1_type"]],
+        "ships": [],
+        "ships_shots_hit": [],
+        "ships_shots_sunk": [],
+        "ships_shots_miss": []
+    },
+    2: {
+        "name": settings["player2_name"],
+        "type": settings["player2_type"],
+        "type_description": player_types[settings["player2_type"]],
+        "ships": [],
+        "ships_shots_hit": [],
+        "ships_shots_sunk": [],
+        "ships_shots_miss": []
+    }
+}
+
 while True:
 
     # Initial parameters
-    settings = battleship_menu(settings, difficulty)
+    settings = battleship_menu(settings, difficulty, players, player_types)
 
     board_size = difficulty[settings["difficulty"]]["board_size"]
     ships = difficulty[settings["difficulty"]]["ships"]
 
-    players = {
-        1: {
-            "name": settings["player1_name"],
-            "type": settings["player1_type"],
-            "ships": [],
-            "ships_shots_hit": [],
-            "ships_shots_sunk": [],
-            "ships_shots_miss": []
-        },
-        2: {
-            "name": settings["player1_name"],
-            "type": settings["player1_type"],
-            "ships": [],
-            "ships_shots_hit": [],
-            "ships_shots_sunk": [],
-            "ships_shots_miss": []
-        }
-    }
+    players[1]["name"] = settings["player1_name"]
+    players[1]["type"] = settings["player1_type"]
+    players[1]["type_description"] = player_types[settings["player2_type"]]
+    players[2]["name"] = settings["player2_name"]
+    players[2]["type"] = settings["player2_type"]
+    players[2]["type_description"] = player_types[settings["player2_type"]]
 
     # Add ships
     for number, player in players.items():

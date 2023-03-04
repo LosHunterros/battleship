@@ -1,6 +1,6 @@
 from functions import *
 
-def get_board(player, board_size, show_ships = False):
+def battleship_get_board(player, board_size, show_ships = False):
     '''
     Return board of chosen player
     '''
@@ -69,8 +69,8 @@ def get_board(player, board_size, show_ships = False):
         first_line += " " + chr(ord('A')+i) + "  "
 
     board_height = board_size[1] * 2 + 3
-    board_height_target = 25
-    board_width_target = 47
+    board_height_target = 23
+    board_width_target = 45
 
     lines_before = ( board_height_target - board_height ) // 2
     lines_after = board_height_target - board_height - lines_before
@@ -102,4 +102,4 @@ def get_board(player, board_size, show_ships = False):
     for line in board_final:
         print(line)
 
-    return False
+    return board_final

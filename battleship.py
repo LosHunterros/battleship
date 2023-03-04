@@ -69,9 +69,17 @@ while True:
     players[1]["name"] = settings["player1_name"]
     players[1]["type"] = settings["player1_type"]
     players[1]["type_description"] = player_types[settings["player2_type"]]
+    players[1]["ships"] = []
+    players[1]["ships_shots_hit"] = []
+    players[1]["ships_shots_sunk"] = []
+    players[1]["ships_shots_miss"] = []
     players[2]["name"] = settings["player2_name"]
     players[2]["type"] = settings["player2_type"]
     players[2]["type_description"] = player_types[settings["player2_type"]]
+    players[2]["ships"] = []
+    players[2]["ships_shots_hit"] = []
+    players[2]["ships_shots_sunk"] = []
+    players[2]["ships_shots_miss"] = []
 
     # Add ships
     for number, player in players.items():
@@ -156,6 +164,7 @@ while True:
                 input_with_quit("Naciśnij enter aby kontynuować ")
 
             elif shot[1] == "hit":
+                players[player_oponent]["ships_shots_hit"].append(shot[0])
                 text_lines = {
                     7: "Strzela:",
                     9: players[player_active]["name"],
@@ -166,8 +175,8 @@ while True:
                 board2 = battleship_get_board(players[2], board_size)
                 battleship_show_game(players, board1, board2, text_lines)
                 input_with_quit("Naciśnij enter aby kontynuować ")
-                players[player_oponent]["ships_shots_hit"].append(shot[0])
             elif shot[1] == "miss":
+                players[player_oponent]["ships_shots_miss"].append(shot[0])
                 text_lines = {
                     7: "Strzela:",
                     9: players[player_active]["name"],
@@ -178,16 +187,24 @@ while True:
                 board2 = battleship_get_board(players[2], board_size)
                 battleship_show_game(players, board1, board2, text_lines)
                 input_with_quit("Naciśnij enter aby kontynuować ")
-                players[player_oponent]["ships_shots_miss"].append(shot[0])
 
         winner = battleship_game_result(players[player_oponent])
 
         if winner == True:
-            print("Zwycięża " + players[player_active]["name"])
+            text_lines = {
+                7: "Zwycięża",
+                9: players[player_active]["name"],
+                11: "GRATULACJE",
+                13: "Naciśnij enter aby kontynuować"
+            }
+            board1 = battleship_get_board(players[1], board_size)
+            board2 = battleship_get_board(players[2], board_size)
+            battleship_show_game(players, board1, board2, text_lines)
+            input_with_quit("Naciśnij enter aby kontynuować ")
         else:
             if player_active == 1:
-                player_active == 2
-                player_oponent == 1
+                player_active = 2
+                player_oponent = 1
             else:
-                player_active == 1
-                player_oponent == 2
+                player_active = 1
+                player_oponent = 2

@@ -32,6 +32,5 @@ def battleship_shot_check(player, shot, board_size):
 
     for ship in player["ships"]:
         if shot in ship: return [shot, "hit"]
-        else: return [shot, "miss"]
 
-    return False
+    return [shot, "miss"]

@@ -4,11 +4,14 @@ def battleship_board_size_chars(board_size):
         board_size_chars.add(chr(ord('a')+i))
     return board_size_chars
 
-def battleship_shot_is_in_board(shot, board_size):
-    board_size_chars = battleship_board_size_chars(board_size)
-
+def battleship_board_size_nums(board_size):
     board_size_nums = set(range(1, board_size[0]+1))
     board_size_nums = set(map(lambda x: str(x), board_size_nums))
+    return board_size_nums
+
+def battleship_shot_is_in_board(shot, board_size):
+    board_size_chars = battleship_board_size_chars(board_size)
+    board_size_nums = battleship_board_size_nums(board_size)
 
     if len(shot) not in [2, 3]: return "Nieprawidłowe współrzędne"
     if len(shot) == 2:
@@ -29,9 +32,7 @@ def battleship_shot_check(player, shot, board_size):
     ["a1", "miss"]
     '''
 
-    board_size_chars = set()
-    for i in range(board_size[0]):
-        board_size_chars.add(chr(ord('a')+i))
+    board_size_chars = battleship_board_size_chars(board_size)
 
     shot_is_in_board = battleship_shot_is_in_board(shot, board_size)
     if isinstance(shot_is_in_board, str): return shot_is_in_board

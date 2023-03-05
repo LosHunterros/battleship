@@ -1,7 +1,11 @@
-def battleship_shot_is_in_board(shot, board_size):
+def battleship_board_size_chars(board_size):
     board_size_chars = set()
-    for i in range(board_size[0]):
+    for i in range(board_size[1]):
         board_size_chars.add(chr(ord('a')+i))
+    return board_size_chars
+
+def battleship_shot_is_in_board(shot, board_size):
+    board_size_chars = battleship_board_size_chars(board_size)
 
     board_size_nums = set(range(1, board_size[0]+1))
     board_size_nums = set(map(lambda x: str(x), board_size_nums))

@@ -9,9 +9,7 @@ def battleship_ship_add(ships, start_coordinates, orientation, ship_size, board_
     '''
     ship = []
 
-    board_size_chars = set()
-    for i in range(board_size[0]):
-        board_size_chars.add(chr(ord('a')+i))
+    board_size_chars = battleship_board_size_chars(board_size)
 
     shot_is_in_board = battleship_shot_is_in_board(start_coordinates, board_size)
     if isinstance(shot_is_in_board, str): return shot_is_in_board

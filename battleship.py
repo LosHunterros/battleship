@@ -5,6 +5,7 @@ from shot_check import battleship_shot_check, battleship_shot_is_ship_sunk
 from game_result import battleship_game_result
 from get_board import battleship_get_board
 from show_game import battleship_show_game
+from ai import battleship_ai_ship_add, battleship_ai_shot_check
 
 difficulty = {
     "easy" : {
@@ -78,7 +79,7 @@ while True:
 
     players[1]["name"] = settings["player1_name"]
     players[1]["type"] = settings["player1_type"]
-    players[1]["type_description"] = player_types[settings["player2_type"]]
+    players[1]["type_description"] = player_types[settings["player1_type"]]
     players[2]["name"] = settings["player2_name"]
     players[2]["type"] = settings["player2_type"]
     players[2]["type_description"] = player_types[settings["player2_type"]]
@@ -91,36 +92,39 @@ while True:
 
             while not isinstance(ship_to_add, list):
 
-                text_lines = {
-                    6: "Przygotowywanie rozgrywki",
-                    7: player["name"] + " Wprowadza statki",
-                    9: "Wprowadź statek o długości " + str(ship),
-                    10: "Podaj współrzędne pierwszego pola statku"
-                }
-                board1 = battleship_get_board(players[1], board_size, True)
-                board2 = battleship_get_board(players[2], board_size, True)
-                battleship_show_game(players, board1, board2, text_lines)
-                ship_add_start_coordinates = input_with_quit("Podaj współrzędne pierwszego pola statku: ")
+                if player["type"] == "human":
+                    text_lines = {
+                        6: "Przygotowywanie rozgrywki",
+                        7: player["name"] + " - " + player["type_description"] + " Wprowadza statki",
+                        9: "Wprowadź statek o długości " + str(ship),
+                        10: "Podaj współrzędne pierwszego pola statku"
+                    }
+                    board1 = battleship_get_board(players[1], board_size, True)
+                    board2 = battleship_get_board(players[2], board_size, True)
+                    battleship_show_game(players, board1, board2, text_lines)
+                    ship_add_start_coordinates = input_with_quit("Podaj współrzędne pierwszego pola statku: ") 
 
-                text_lines = {
-                    6: "Przygotowywanie rozgrywki",
-                    7: player["name"] + " Wprowadza statki",
-                    9: "Wprowadź statek o długości " + str(ship),
-                    11: "Podaj położenie statku:",
-                    12: "1. Poziome",
-                    13: "2. Pionowe"
-                }
-                board1 = battleship_get_board(players[1], board_size, True)
-                board2 = battleship_get_board(players[2], board_size, True)
-                battleship_show_game(players, board1, board2, text_lines)
-                ship_add_orientation = input_with_quit("Podaj położenie statku: ")
+                    text_lines = {
+                        6: "Przygotowywanie rozgrywki",
+                        7: player["name"] + " - " + player["type_description"] + " Wprowadza statki",
+                        9: "Wprowadź statek o długości " + str(ship),
+                        11: "Podaj położenie statku:",
+                        12: "1. Poziome",
+                        13: "2. Pionowe"
+                    }
+                    board1 = battleship_get_board(players[1], board_size, True)
+                    board2 = battleship_get_board(players[2], board_size, True)
+                    battleship_show_game(players, board1, board2, text_lines)
+                    ship_add_orientation = input_with_quit("Podaj położenie statku: ")
 
-                ship_to_add = battleship_ship_add(player["ships"], ship_add_start_coordinates.lower(), ship_add_orientation, ship, board_size)
+                    ship_to_add = battleship_ship_add(player["ships"], ship_add_start_coordinates.lower(), ship_add_orientation, ship, board_size)
+
+                else: ship_to_add = battleship_ai_ship_add(player["ships"], ship, board_size)
 
                 if isinstance(ship_to_add, str):
                     text_lines = {
                         6: "Przygotowywanie rozgrywki",
-                        7: player["name"] + " Wprowadza statki",
+                        7: player["name"] + " - " + player["type_description"] + " Wprowadza statki",
                         9: ship_to_add,
                         11: "Spróbuj ponownie",
                         12: "Naciśnij enter aby kontynuować"
@@ -130,7 +134,18 @@ while True:
                     battleship_show_game(players, board1, board2, text_lines)
                     input_with_quit("Naciśnij enter aby kontynuować ")
                     
-                else: players[number]["ships"].append(ship_to_add)
+                else:
+                    players[number]["ships"].append(ship_to_add)
+                    text_lines = {
+                        6: "Przygotowywanie rozgrywki",
+                        7: player["name"] + " - " + player["type_description"] + " Wprowadza statki",
+                        9: "Statek dodany",
+                        10: "Naciśnij enter aby kontynuować"
+                    }
+                    board1 = battleship_get_board(players[1], board_size, True)
+                    board2 = battleship_get_board(players[2], board_size, True)
+                    battleship_show_game(players, board1, board2, text_lines)
+                    input_with_quit("Naciśnij enter aby kontynuować ")
 
     # Begin shooting
     player_active = 1
@@ -141,21 +156,26 @@ while True:
 
         shot = False
         while not isinstance(shot, list):
-            text_lines = {
-                7: "Strzela:",
-                9: players[player_active]["name"]
-            }
-            board1 = battleship_get_board(players[1], board_size)
-            board2 = battleship_get_board(players[2], board_size)
-            battleship_show_game(players, board1, board2, text_lines)
 
-            shot = input("Podaj współrzędne strzału: ")
-            shot = battleship_shot_check(players[player_oponent], shot, board_size)
+            if players[player_active]["type"] == "human":
+                text_lines = {
+                    7: "Strzela:",
+                    9: players[player_active]["name"] + " - " + players[player_active]["type_description"],
+                    11: "Podaj współrzędne strzału"
+                }
+                board1 = battleship_get_board(players[1], board_size)
+                board2 = battleship_get_board(players[2], board_size)
+                battleship_show_game(players, board1, board2, text_lines)
+
+                shot = input("Podaj współrzędne strzału: ")
+                shot = battleship_shot_check(players[player_oponent], shot, board_size)
+
+            else: shot = battleship_ai_shot_check(players[player_oponent], board_size)
 
             if isinstance(shot, str):
                 text_lines = {
                     7: "Strzela:",
-                    9: players[player_active]["name"],
+                    9: players[player_active]["name"] + " - " + players[player_active]["type_description"],
                     11: shot,
                     12: "Spróbuj ponownie",
                     13: "Naciśnij enter aby kontynuować"
@@ -176,7 +196,7 @@ while True:
                 players[player_oponent]["ships_shots_hit"].append(shot[0])
                 text_lines = {
                     7: "Strzela:",
-                    9: players[player_active]["name"],
+                    9: players[player_active]["name"] + " - " + players[player_active]["type_description"],
                     11: "TRAFIONY" + shot_is_ship_sunk_message,
                     13: "Naciśnij enter aby kontynuować"
                 }
@@ -188,7 +208,7 @@ while True:
                 players[player_oponent]["ships_shots_miss"].append(shot[0])
                 text_lines = {
                     7: "Strzela:",
-                    9: players[player_active]["name"],
+                    9: players[player_active]["name"] + " - " + players[player_active]["type_description"],
                     11: "Pudło...",
                     13: "Naciśnij enter aby kontynuować"
                 }
@@ -202,7 +222,7 @@ while True:
         if winner == True:
             text_lines = {
                 7: "Zwycięża",
-                9: players[player_active]["name"],
+                9: players[player_active]["name"] + " - " + players[player_active]["type_description"],
                 11: "GRATULACJE",
                 13: "Naciśnij enter aby kontynuować"
             }

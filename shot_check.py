@@ -25,6 +25,15 @@ def battleship_shot_is_repeated(player, shot):
     if shot in player["ships_shots_hit"] or shot in player["ships_shots_sunk"] or shot in player["ships_shots_miss"]: return "Strzał w to miejsce był już wykonany"
     return False
 
+def battleship_shot_is_ship_sunk(player, shot):
+    for i, ship in enumerate(player["ships"]):
+        if shot in ship: ship_hited = i
+    
+    for ship_part in player["ships"][ship_hited]:
+        if ship_part not in player["ships_shots_hit"] and ship_part != shot: return None
+    
+    return ship_hited
+
 def battleship_shot_check(player, shot, board_size):
     '''
     Validation of shot. Return False is something went wront or result in format:

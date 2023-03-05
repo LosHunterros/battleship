@@ -1,7 +1,7 @@
 from functions import *
 from menu import battleship_menu
 from ship_add import battleship_ship_add
-from shot_check import battleship_shot_check
+from shot_check import battleship_shot_check, battleship_shot_is_ship_sunk
 from game_result import battleship_game_result
 from get_board import battleship_get_board
 from show_game import battleship_show_game
@@ -166,11 +166,18 @@ while True:
                 input_with_quit("Naciśnij enter aby kontynuować ")
 
             elif shot[1] == "hit":
+                shot_is_ship_sunk = battleship_shot_is_ship_sunk(players[player_oponent], shot[0])
+                if shot_is_ship_sunk != None:
+                    for ship_part in players[player_oponent]["ships"][shot_is_ship_sunk]:
+                        players[player_oponent]["ships_shots_sunk"].append(ship_part)
+                    shot_is_ship_sunk_message = " ZATOPIONY!"
+                else: shot_is_ship_sunk_message = ""
+
                 players[player_oponent]["ships_shots_hit"].append(shot[0])
                 text_lines = {
                     7: "Strzela:",
                     9: players[player_active]["name"],
-                    11: "TRAFIONY",
+                    11: "TRAFIONY" + shot_is_ship_sunk_message,
                     13: "Naciśnij enter aby kontynuować"
                 }
                 board1 = battleship_get_board(players[1], board_size)

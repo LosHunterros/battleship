@@ -15,7 +15,7 @@ def battleship_shot_is_in_board(shot, board_size):
     return True
 
 def battleship_shot_is_repeated(player, shot):
-
+    if shot in player["ships_shots_hit"] or shot in player["ships_shots_sunk"] or shot in player["ships_shots_miss"]: return "Strzał w to miejsce był już wykonany"
     return False
 
 def battleship_shot_check(player, shot, board_size):
@@ -31,6 +31,9 @@ def battleship_shot_check(player, shot, board_size):
 
     shot_is_in_board = battleship_shot_is_in_board(shot, board_size)
     if isinstance(shot_is_in_board, str): return shot_is_in_board
+
+    shot_is_repeated = battleship_shot_is_repeated(player, shot)
+    if isinstance(shot_is_repeated, str): return shot_is_repeated
 
     if shot[0] not in board_size_chars:
         if len(shot) == 2: shot = shot[::-1]
